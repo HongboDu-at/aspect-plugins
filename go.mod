@@ -1,4 +1,4 @@
-module github.com/aspect-build/aspect-cli-plugin-template
+module github.com/HongboDu-at/aspect-plugins
 
 go 1.19
 

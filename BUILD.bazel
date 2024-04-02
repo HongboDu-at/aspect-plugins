@@ -19,13 +19,13 @@ gazelle(
     command = "update-repos",
 )
 
-# gazelle:prefix github.com/aspect-build/aspect-cli-plugin-template
+# gazelle:prefix github.com/HongboDu-at/aspect-plugins
 # Buildozer ships with BUILD files but doesn't follow our naming convention
 # gazelle:resolve go github.com/bazelbuild/buildtools/edit @com_github_bazelbuild_buildtools//edit:go_default_library
 go_library(
-    name = "aspect-cli-plugin-template_lib",
+    name = "aspect-cli-plugin_lib",
     srcs = ["plugin.go"],
-    importpath = "github.com/aspect-build/aspect-cli-plugin-template",
+    importpath = "github.com/HongboDu-at/aspect-plugins",
     visibility = ["//:__subpackages__"],
     deps = [
         "@build_aspect_cli//bazel/buildeventstream",
@@ -38,8 +38,8 @@ go_library(
 # Only used for local development.
 # Release binaries are created by the target in /release
 go_binary(
-    name = "aspect-cli-plugin-template",
-    embed = [":aspect-cli-plugin-template_lib"],
+    name = "aspect-cli-plugin",
+    embed = [":aspect-cli-plugin_lib"],
     visibility = ["//visibility:public"],
 )
 
@@ -47,7 +47,7 @@ go_binary(
 # Referenced by the .aspect/cli/config.yaml in the `From:` line.
 local_plugin(
     name = "dev",
-    binary = ":aspect-cli-plugin-template",
+    binary = ":aspect-cli-plugin",
     path = "plugin",
 )
 

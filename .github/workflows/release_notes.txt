@@ -2,7 +2,7 @@ To use this plugin, add it to your `.aspect/cli/config.yaml` file like so:
 
 ```
 plugins:
-  - name: hello-world
-    from: github.com/aspect-build/aspect-cli-plugin-template
+  - name: composite-plugin
+    from: github.com/HongboDu-at/aspect-plugins
     version: ${GITHUB_REF_NAME}
 ```
