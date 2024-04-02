@@ -44,6 +44,13 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_proto/archive/f7a30f6f80006b591fa7c437fe5a951eb10bcbcf.tar.gz"],
 )
 
+http_archive(
+    name = "aspect_bazel_lib",
+    sha256 = "ac6392cbe5e1cc7701bbd81caf94016bae6f248780e12af4485d4a7127b4cb2b",
+    strip_prefix = "bazel-lib-2.6.1",
+    url = "https://github.com/aspect-build/bazel-lib/releases/download/v2.6.1/bazel-lib-v2.6.1.tar.gz",
+)
+
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
 
 protobuf_deps()
@@ -70,3 +77,11 @@ load("//:go.bzl", _go_repositories = "deps")
 _go_repositories()
 
 gazelle_dependencies()
+
+load("@aspect_bazel_lib//lib:repositories.bzl", "aspect_bazel_lib_dependencies", "aspect_bazel_lib_register_toolchains")
+
+# Required bazel-lib dependencies
+aspect_bazel_lib_dependencies()
+
+# Register bazel-lib toolchains
+aspect_bazel_lib_register_toolchains()

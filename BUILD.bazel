@@ -1,3 +1,4 @@
+load("@aspect_bazel_lib//lib:diff_test.bzl", "diff_test")
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 load("//release:release.bzl", "local_plugin")
@@ -28,13 +29,9 @@ go_library(
     visibility = ["//:__subpackages__"],
     deps = [
         "@build_aspect_cli//bazel/buildeventstream",
-        "@build_aspect_cli//bazel/command_line",
-        "@build_aspect_cli//pkg/bazel",
-        "@build_aspect_cli//pkg/ioutils",
         "@build_aspect_cli//pkg/plugin/sdk/v1alpha3/config",
         "@build_aspect_cli//pkg/plugin/sdk/v1alpha3/plugin",
         "@com_github_hashicorp_go_plugin//:go-plugin",
-        "@com_github_manifoldco_promptui//:promptui",
     ],
 )
 
@@ -52,4 +49,19 @@ local_plugin(
     name = "dev",
     binary = ":aspect-cli-plugin-template",
     path = "plugin",
+)
+
+# Local dev target: bazel test --build_event_json_file=bep.json :dev-diff1 :dev-diff2
+diff_test(
+    name = "dev-diff1",
+    file1 = "tests/file1.txt",
+    file2 = "tests/file2.txt",
+    tags = ["manual"],
+)
+
+diff_test(
+    name = "dev-diff2",
+    file1 = "tests/file1.txt",
+    file2 = "tests/file3.txt",
+    tags = ["manual"],
 )
